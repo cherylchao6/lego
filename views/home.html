@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lego Collection</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="bg-sky-600 text-white">
+      <div class="container mx-auto px-4 md:flex items-center gap-6">
+        <!-- Logo -->
+        <div class="flex items-center justify-between md:w-auto w-full">
+          <a href="/" class="py-5 px-2 text-white flex-1 font-bold"
+            >Lego Collection</a
+          >
+
+          <!-- mobile menu icon -->
+          <div class="md:hidden flex items-center">
+            <button type="button" class="mobile-menu-button">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="hidden md:flex md:flex-row flex-col items-center justify-start md:space-x-1 pb-3 md:pb-0 navigation-menu"
+        >
+          <a href="/about" class="py-2 px-3 block">About</a>
+          <!-- Dropdown menu -->
+          <div class="relative">
+            <button
+              type="button"
+              class="dropdown-toggle py-2 px-3 hover:bg-sky-800 flex items-center gap-2 rounded"
+            >
+              <span class="pointer-events-none select-none">Theme</span>
+              <svg
+                class="w-3 h-3 pointer-events-none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
+            <div
+              class="dropdown-menu absolute hidden bg-sky-700 text-white rounded-b-lg pb-2 w-48"
+            >
+              <a
+                href="/lego/sets?theme=Books"
+                class="block px-6 py-2 hover:bg-sky-800"
+                >Books</a
+              >
+              <a
+                href="/lego/sets?theme=Supplemental"
+                class="block px-6 py-2 hover:bg-sky-800"
+                >Supplemental</a
+              >
+              <a
+                href="/lego/sets?theme=Playhouse"
+                class="block px-6 py-2 hover:bg-sky-800"
+                >Playhouse</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto">
+      <div class="hero bg-slate-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Lego Collection</h1>
+            <p class="py-6">
+              Don't hesitate, join this amazing LEGO adventure now and
+              experience the excitement and creativity that only Lego Collection
+              can offer!
+            </p>
+            <a href="/lego/sets">
+              <button class="btn btn-primary">Let's Go</button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- cards -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 px-2 py-2"
+      >
+        <div class="border-2">
+          <figure>
+            <img
+              class="w-full h-64 object-cover"
+              src="https://cdn.rebrickable.com/media/sets/0011-2.jpg"
+              alt="card1"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Town Mini-Figures</h2>
+            <p class="h-64">
+              "Enhance your LEGO town with the Town Mini-Figures set! Featuring
+              a sailor, a construction worker, and a townsperson, this classic
+              collection adds charm and character to any scene. Perfect for
+              creative play and building, it's a must-have for LEGO
+              enthusiasts."
+            </p>
+            <div class="card-actions justify-end">
+              <a href="/lego/sets/0011-2">
+                <button class="btn btn-primary">Buy Now</button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-2">
+          <figure>
+            <img
+              class="w-full h-64 object-cover"
+              src="https://cdn.rebrickable.com/media/sets/0011-3.jpg"
+              alt="card1"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Castle 2 for 1 Bonus Offer</h2>
+            <p class="h-64">
+              "Expand your medieval kingdom with the LEGO Castle 2 for 1 Bonus
+              Offer! This set includes two classic castle-themed builds,
+              complete with knights, horses, and medieval accessories. Perfect
+              for fans of all ages, it provides endless hours of imaginative
+              play and adventure."
+            </p>
+            <div class="card-actions justify-end">
+              <a href="/lego/sets/0011-3">
+                <button class="btn btn-primary">Buy Now</button>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-2">
+          <figure>
+            <img
+              class="w-full h-64 object-cover"
+              src="https://cdn.rebrickable.com/media/sets/003-1.jpg"
+              alt="card1"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title">Master Mechanic Set</h2>
+            <p class="h-64">
+              "Unlock your engineering potential with the LEGO Master Mechanic
+              Set! This classic set features intricate builds and mechanical
+              components, perfect for budding engineers and LEGO enthusiasts.
+              Create dynamic models and explore endless possibilities with this
+              timeless kit."
+            </p>
+            <div class="card-actions justify-end">
+              <a href="/lego/sets/003-1">
+                <button class="btn btn-primary">Buy Now</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/scripts/home.js"></script>
+  </body>
+</html>
