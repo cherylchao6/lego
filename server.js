@@ -13,7 +13,6 @@
  ********************************************************************************/
 
 const legoData = require("./modules/legoSets");
-const path = require("path");
 
 legoData
   .initialize()
@@ -92,7 +91,6 @@ app.use((req, res, next) => {
   next(err);
 });
 
-// General error handling middleware
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render("404", {
