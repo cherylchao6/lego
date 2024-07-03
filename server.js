@@ -8,7 +8,7 @@
  *
  *  Name: Tzu Han Chao Student ID: 151593225 Date: 2024.06.20
  *
- *  Published URL: ___________________________________________________________
+ *  Published URL: https://lego-mu-liart.vercel.app/
  *
  ********************************************************************************/
 
@@ -27,56 +27,75 @@ legoData
 const express = require("express");
 const app = express();
 const port = 3000;
+app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/home.html"));
+  res.render("home");
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile(path.join(__dirname, "/views/about.html"));
+  res.render("about");
 });
 
-app.get("/lego/sets", (req, res) => {
+app.get("/lego/sets", (req, res, next) => {
   let { theme } = req.query;
   if (theme) {
-    console.log(theme);
     legoData
       .getSetsByTheme(theme)
       .then((sets) => {
-        res.send(sets);
+        if (sets.length === 0) {
+          const err = new Error("No Sets found for a matching theme");
+          err.status = 404;
+          return next(err);
+        }
+        res.render("sets", { sets: sets });
       })
       .catch((err) => {
-        res.status(404).send("Theme not found");
+        next(err);
       });
   } else {
     legoData
       .getAllSets()
       .then((sets) => {
-        res.send(sets);
+        res.render("sets", { sets: sets });
       })
       .catch((err) => {
-        res.status(404).send("Sets not found");
+        next(err);
       });
   }
 });
 
-app.get("/lego/sets/:num", (req, res) => {
+app.get("/lego/sets/:num", (req, res, next) => {
   let { num } = req.params;
   legoData
     .getSetByNum(num)
     .then((set) => {
-      console.log(set);
-      res.send(set);
+      if (!set) {
+        const err = new Error("No Sets found for a specific set num");
+        err.status = 404;
+        next(err);
+      } else {
+        res.render("set", { set: set });
+      }
     })
     .catch((err) => {
-      res.status(404).send("Set not found");
-      throw new Error(err);
+      next(err);
     });
 });
 
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, "/views/404.html"));
+  const err = new Error("No view matched for a specific route ");
+  err.status = 404;
+  next(err);
+});
+
+// General error handling middleware
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.render("404", {
+    message: err.message || "An unexpected error occurred",
+  });
 });
 
 app.listen(port, () => {

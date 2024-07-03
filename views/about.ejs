@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('partials/navbar', {page: '/about'}) %>
+    <div class="container mx-auto">
+      <div class="hero bg-slate-200 mt-4">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">About Me</h1>
+            <p class="py-6">
+              My name is Tzu Han Chao, but you can call me Cheryl. I have an
+              outgoing and lively personality and I really enjoy playing
+              basketball. I don't have much interest in LEGO, but I created this
+              project because of the assignment. I hope the professor won't
+              deduct points for my honesty. It was nice to meet everyone, and I
+              wish you all a wonderful day.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-1">
+        <div class="w-full border-2 flex items-center justify-center">
+          <figure>
+            <img
+              class="w-full object-cover"
+              src="https://i.pinimg.com/736x/a0/74/c7/a074c71043d8d8c8a57ed469f9b14a0b.jpg"
+              alt="card1"
+            />
+          </figure>
+        </div>
+        <div class="border-2 p-4 flex flex-col justify-center">
+          <h1 class="text-3xl font-bold mb-8 text-center">
+            Cheryl, Tzu Han Chao
+          </h1>
+          <div class="pl-10">
+            <li>
+              I love playing basketball and I am currently on the school
+              basketball team.
+            </li>
+            <li>I am studying Computer Programming and Analysis at Seneca.</li>
+            <li>I am cheerful and bright.</li>
+            <li>My favorite programming language is JavaScript.</li>
+            <li>I prefer writing backend code over frontend development.</li>
+            <li>
+              In my free time, I enjoy singing, playing the guitar, and dancing.
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

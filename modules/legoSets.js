@@ -15,6 +15,7 @@ function initialize() {
           theme_id: set.theme_id,
           num_parts: set.num_parts,
           theme: theme.name,
+          img_url: set.img_url,
         });
       });
 
