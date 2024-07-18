@@ -32,7 +32,7 @@
           />
         </div>
         <div class="prose">
-          <p><strong>Theme:</strong> <%= set.theme %></p>
+          <p><strong>Theme:</strong> <%= set.Theme.name %></p>
 
           <p><strong>Year:</strong> <%= set.year %></p>
 
@@ -67,6 +67,12 @@
             class="fixed bottom-4 left-1/4 transform -translate-x-1/2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
           >
             <a href="#" onclick="history.back(); return false;">Go Back</a>
+          </div>
+
+          <div class="mt-4">
+            <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-success"
+              >Edit</a
+            >
           </div>
         </div>
       </div>
