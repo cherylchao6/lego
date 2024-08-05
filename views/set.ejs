@@ -69,11 +69,13 @@
             <a href="#" onclick="history.back(); return false;">Go Back</a>
           </div>
 
+          <% if(session.user){ %>
           <div class="mt-4">
             <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-success"
               >Edit</a
             >
           </div>
+          <% } %>
         </div>
       </div>
     </div>

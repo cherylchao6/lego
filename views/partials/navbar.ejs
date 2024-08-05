@@ -32,70 +32,67 @@
         class="hidden md:flex md:flex-row flex-col items-center justify-start md:space-x-1 pb-3 md:pb-0 navigation-menu md:ml-auto md:space-x"
       >
         <li class="pr-8">
-          <a href="/about" class="<%= page === '/about' ? 'active' : '' %>"
+          <a
+            href="/about"
+            class="<%= typeof page !== 'undefined' && page === '/about' ? 'active' : '' %>"
             >About</a
           >
         </li>
         <li>
           <a
             href="/lego/sets"
-            class="<%= page === '/lego/sets' ? 'active' : '' %>"
+            class="<%= typeof page !== 'undefined' && page === '/lego/sets' ? 'active' : '' %>"
             >View Collections</a
           >
         </li>
+        <% if (session && session.user) { %>
         <li>
-          <a
-            href="/lego/addSet"
-            class="<%= page === '/lego/addSet' ? 'active' : '' %>"
-            >Add to Collection</a
-          >
+          <details>
+            <summary>Account: <%= session.user.userName %></summary>
+            <ul class="p-2 right-0">
+              <li>
+                <a
+                  class="<%= typeof page !== 'undefined' && page === '/lego/addSet' ? 'active' : '' %>"
+                  href="/lego/addSet"
+                  >Add to Collection</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= typeof page !== 'undefined' && page === '/userHistory' ? 'active' : '' %>"
+                  href="/userHistory"
+                  >User History</a
+                >
+              </li>
+              <li><a href="/logout">Log Out</a></li>
+            </ul>
+          </details>
         </li>
+        <% } else { %>
+        <li>
+          <details>
+            <summary>Account</summary>
+            <ul class="p-2 right-0">
+              <li>
+                <a
+                  class="<%= typeof page !== 'undefined' && page === '/login' ? 'active' : '' %>"
+                  href="/login"
+                  >Login</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= typeof page !== 'undefined' && page === '/register' ? 'active' : '' %>"
+                  href="/register"
+                  >Register</a
+                >
+              </li>
+            </ul>
+          </details>
+        </li>
+        <% } %>
       </ul>
-
-      <!-- Dropdown menu -->
-      <!-- <div class="relative">
-        <button
-          type="button"
-          class="dropdown-toggle py-2 px-3 hover:bg-sky-800 flex items-center gap-2 rounded"
-        >
-          <span class="pointer-events-none select-none">Theme</span>
-          <svg
-            class="w-3 h-3 pointer-events-none"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m19.5 8.25-7.5 7.5-7.5-7.5"
-            />
-          </svg>
-        </button>
-        <div
-          class="dropdown-menu absolute hidden bg-sky-700 text-white rounded-b-lg pb-2 w-48"
-        >
-          <a
-            href="/lego/sets?theme=Harbor"
-            class="block px-6 py-2 hover:bg-sky-800"
-            >Harbor</a
-          >
-          <a
-            href="/lego/sets?theme=Supplemental"
-            class="block px-6 py-2 hover:bg-sky-800"
-            >Supplemental</a
-          >
-          <a
-            href="/lego/sets?theme=UFO"
-            class="block px-6 py-2 hover:bg-sky-800"
-            >UFO</a
-          >
-        </div>
-      </div> -->
     </div>
   </div>
 </nav>
-<script src="../../public/scripts/home.js"></script>
+<script src="/public/scripts/home.js"></script>

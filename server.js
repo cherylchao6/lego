@@ -11,22 +11,13 @@
  *  Published URL: https://lego-mu-liart.vercel.app/
  *
  ********************************************************************************/
-
 const legoData = require("./modules/legoSets");
-
-legoData
-  .initialize()
-  .then(() => {
-    console.log("Lego data initialized");
-  })
-  .catch((err) => {
-    throw new Error(err);
-  });
+const authData = require("./modules/auth-service");
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const port = 3000;
+const HTTP_PORT = 3000;
 
 app.use(express.static(`${__dirname}/public`));
 app.set("views", `${__dirname}/views`);
@@ -36,6 +27,84 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+const clientSessions = require("client-sessions");
+require("dotenv").config();
+app.use(
+  clientSessions({
+    cookieName: "session",
+    secret: process.env.SESSION_SECRET,
+    duration: 2 * 60 * 1000,
+    activeDuration: 1000 * 60,
+  })
+);
+
+// initialize the data service
+legoData
+  .initialize()
+  .then(authData.initialize)
+  .then(function () {
+    app.listen(HTTP_PORT, function () {
+      console.log(`app listening on: ${HTTP_PORT}`);
+    });
+  })
+  .catch(function (err) {
+    console.log(`unable to start server: ${err}`);
+  });
+
+app.use((req, res, next) => {
+  res.locals.session = req.session;
+  next();
+});
+
+// auth routes
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+app.post("/register", (req, res) => {
+  authData
+    .registerUser(req.body)
+    .then(() => {
+      res.render("register", {
+        successMessage: "User created",
+      });
+    })
+    .catch((err) => {
+      res.render("register", {
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+app.post("/login", (req, res) => {
+  req.body.userAgent = req.get("User-Agent");
+  authData
+    .checkUser(req.body)
+    .then((user) => {
+      req.session.user = {
+        userName: user.userName,
+        email: user.email,
+        loginHistory: user.loginHistory,
+      };
+      res.redirect("/lego/sets");
+    })
+    .catch((err) => {
+      res.render("login", {
+        errorMessage: err,
+        userName: req.body.userName,
+      });
+    });
+});
+app.get("/logout", ensureLogin, (req, res) => {
+  req.session.reset();
+  res.redirect("/");
+});
+app.get("/userHistory", ensureLogin, (req, res) => {
+  res.render("userHistory", { user: req.session.user });
+});
+
 app.get("/", (req, res) => {
   res.render("home");
 });
@@ -44,7 +113,7 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
-app.get("/lego/addSet", (req, res) => {
+app.get("/lego/addSet", ensureLogin, (req, res) => {
   legoData
     .getAllThemes()
     .then((themes) => {
@@ -55,7 +124,7 @@ app.get("/lego/addSet", (req, res) => {
     });
 });
 
-app.get("/lego/editSet/:num", (req, res) => {
+app.get("/lego/editSet/:num", ensureLogin, (req, res) => {
   let { num } = req.params;
   legoData
     .getSetByNum(num)
@@ -80,7 +149,7 @@ app.get("/lego/editSet/:num", (req, res) => {
     });
 });
 
-app.post("/lego/addSet", (req, res) => {
+app.post("/lego/addSet", ensureLogin, (req, res) => {
   let { set_num, name, year, theme_id, num_parts, img_url } = req.body;
   legoData
     .addSet(set_num, name, year, theme_id, num_parts, img_url)
@@ -94,9 +163,8 @@ app.post("/lego/addSet", (req, res) => {
     });
 });
 
-app.post("/lego/editSet", (req, res) => {
+app.post("/lego/editSet", ensureLogin, (req, res) => {
   let { set_num } = req.body;
-
   let setData = {
     name: req.body.name,
     year: req.body.year,
@@ -163,7 +231,7 @@ app.get("/lego/sets/:num", (req, res, next) => {
     });
 });
 
-app.get("/lego/deleteSet/:num", (req, res) => {
+app.get("/lego/deleteSet/:num", ensureLogin, (req, res) => {
   let { num } = req.params;
   legoData
     .deleteSet(num)
@@ -190,6 +258,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// helper function to ensure the user is authenticated
+function ensureLogin(req, res, next) {
+  if (!req.session.user) {
+    res.redirect("/login");
+  } else {
+    next();
+  }
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <%- include('partials/navbar', { page: '/login', session: {} }) %>
+    <div class="container mx-auto">
+      <div class="hero bg-slate-200">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h1 class="text-5xl font-bold">Log In</h1>
+            <p class="">Please provide your credentials below</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 px-2 py-2">
+        <form action="/login" method="POST">
+          <div class="mb-4">
+            <label for="userName" class="block text-gray-700">User Name</label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              required
+              placeholder="Username"
+              class="border rounded w-full py-2 px-3 text-gray-700"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block text-gray-700">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              placeholder="Password"
+              class="border rounded w-full py-2 px-3 text-gray-700"
+            />
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+        </form>
+        
+        <% if (typeof errorMessage !== 'undefined') { %>
+          <div class="alert alert-error mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span><%= errorMessage %></span>
+          </div>
+        <% } %>
+
+    </div>
+  </body>
+</html>
